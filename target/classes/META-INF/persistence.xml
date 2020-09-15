@@ -6,6 +6,9 @@
 	
 	<persistence-unit name="projeto-jsf-jpa">
 	
+	<class>pacote.model.UsuarioPessoa</class>
+	<class>pacote.model.Telefone</class>
+	
 	<properties>
 	<property name="hibernate.connection.driver.class" value="org.postgresql.Driver"/>
 	<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/projeto-jsf-jpa"/>

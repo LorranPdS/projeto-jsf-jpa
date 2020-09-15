@@ -16,7 +16,6 @@ public class HibernateUtil {
 		try {
 			if(factory == null) {
 				factory = Persistence.createEntityManagerFactory("projeto-jsf-jpa");
-				System.out.println("Conectado ao BD com sucesso!");
 			}
 			
 		}catch (Exception e) {
@@ -31,4 +30,5 @@ public class HibernateUtil {
 	public static Object getPrimaryKey(Object entity) {
 		return factory.getPersistenceUnitUtil().getIdentifier(entity);
 	}
+	
 }
