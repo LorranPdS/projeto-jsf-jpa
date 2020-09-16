@@ -6,7 +6,7 @@
 	
 	<persistence-unit name="projeto-jsf-jpa">
 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-	<class>pacote.model.PessoaModel</class>
+	<class>entidade.Pessoa</class>
 	
 	<properties>
 	<property name="javax.persistence.jdbc.url" 

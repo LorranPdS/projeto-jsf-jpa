@@ -6,7 +6,6 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Página de Cadastro</title>
-	<meta></meta>
 </h:head>
 
 <h:body>
@@ -14,15 +13,15 @@
 	<h:form id="formPessoa">
 		<h1>Página Inicial</h1>
 		
-		<h:outputLabel value="Id:" />
-		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+		<h:outputLabel value="Id:" readonly="true" />
+		<h:inputText value="#{pessoaBean.pessoa.id}" />
 		<br/>
-
+		
 		<h:outputLabel value="Nome:" />
 		<h:inputText value="#{pessoaBean.pessoa.nome}" />
 		<br/>
 		
-		<h:outputLabel value="Sobrenome" />
+		<h:outputLabel value="Sobrenome:" />
 		<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
 		<br/>
 		
@@ -30,15 +29,14 @@
 		<h:inputText value="#{pessoaBean.pessoa.idade}" />
 		<br/>
 		
-		<h:commandButton action="#{pessoaBean.salvar}" value="Salvar" />
-		<h:commandButton action="#{pessoaBean.novo}" value="Novo" />
-		<h:commandButton action="#{pessoaBean.remover}" value="Remover" />
-		
+		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" />
+		<h:commandButton value="Limpar" action="#{pessoaBean.limpar}" />
+		<h:commandButton value="Remover" action="#{pessoaBean.remover}" />
+
 	</h:form>
 	<br/><br/>
 	
 	<h:form id="formTable">
-	
 	<h:dataTable value="#{pessoaBean.pessoas}" var="p">
 	<h:column>
 	<h:outputText value="#{p.id}" />
@@ -54,21 +52,49 @@
 	
 	<h:column>
 	<h:commandLink value="Editar">
-	<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
-	</h:commandLink>
-	</h:column>
-	
-	<h:column>
-	<h:commandLink value="Deletar" action="#{pessoaBean.remover}">
 	<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
 	</h:commandLink>
 	</h:column>
 	
 	
 	
+	<h:column>
+	<h:commandLink value="Deletar" action="#{pessoaBean.remover}">
+	<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
 	
-	</h:dataTable>	
+	</h:commandLink>
+	</h:column>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</h:dataTable>
+	
 	</h:form>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </h:body>

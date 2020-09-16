@@ -1,30 +1,19 @@
-package pacote.dao;
+package dao;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import pacote.jpautil.JPAUtil;
+import jpautil.JPAUtil;
 
 public class DaoGeneric<T> {
 
-
-	public void salvar(T entidade) {
+	public T salvar(T entidade) {
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
 		
-		entityManager.persist(entidade);
-		transaction.commit();
-		entityManager.close();
-	}
-	
-	public T merge(T entidade) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		
 		T ent = entityManager.merge(entidade);
 		transaction.commit();
 		entityManager.close();
@@ -32,19 +21,17 @@ public class DaoGeneric<T> {
 		return ent;
 	}
 	
-	public void deletarPorId(T entidade) {
+	public void excluir(T entidade) {
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
 		Object id = JPAUtil.getPrimaryKey(entidade);
-		entityManager.createQuery("delete from "
-				+ entidade.getClass().getCanonicalName() 
-				+ " where id = " + id).executeUpdate();
+		entityManager.createQuery("delete from " 
+		+ entidade.getClass().getCanonicalName() + " where id = " + id).executeUpdate();
 		
 		transaction.commit();
-		entityManager.close();
-		
+		entityManager.close();		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -53,32 +40,12 @@ public class DaoGeneric<T> {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		List<T> ent = entityManager.createQuery("from " 
-				+ entidade.getName()).getResultList();
+		List<T> result = entityManager.createQuery("from " 
+		+ entidade.getName()).getResultList();
 		
 		transaction.commit();
 		entityManager.close();
-		return ent;
 		
-	}
-	
-
+		return result;
+	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

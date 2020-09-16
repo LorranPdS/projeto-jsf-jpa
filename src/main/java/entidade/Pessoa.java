@@ -1,4 +1,4 @@
-package pacote.model;
+package entidade;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class PessoaModel implements Serializable {
+public class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,9 +25,6 @@ public class PessoaModel implements Serializable {
 
 	@Column(nullable = false)
 	private Integer idade;
-
-	public PessoaModel() {
-	}
 
 	public Long getId() {
 		return id;
@@ -77,18 +74,13 @@ public class PessoaModel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PessoaModel other = (PessoaModel) obj;
+		Pessoa other = (Pessoa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "PessoaModel [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", idade=" + idade + "]";
 	}
 
 }
