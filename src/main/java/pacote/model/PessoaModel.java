@@ -1,28 +1,33 @@
 package pacote.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class Telefone {
+public class PessoaModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column(nullable = false)
-	private String tipo;
+	private String nome;
 
 	@Column(nullable = false)
-	private String numero;
+	private String sobrenome;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	private UsuarioPessoa pessoa;
+	@Column(nullable = false)
+	private Integer idade;
+
+	public PessoaModel() {
+	}
 
 	public Long getId() {
 		return id;
@@ -32,28 +37,28 @@ public class Telefone {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getSobrenome() {
+		return sobrenome;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
-	public UsuarioPessoa getPessoa() {
-		return pessoa;
+	public Integer getIdade() {
+		return idade;
 	}
 
-	public void setPessoa(UsuarioPessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setIdade(Integer idade) {
+		this.idade = idade;
 	}
 
 	@Override
@@ -72,7 +77,7 @@ public class Telefone {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Telefone other = (Telefone) obj;
+		PessoaModel other = (PessoaModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,7 +88,7 @@ public class Telefone {
 
 	@Override
 	public String toString() {
-		return "Telefone [id=" + id + ", tipo=" + tipo + ", numero=" + numero + ", pessoa=" + pessoa + "]";
+		return "PessoaModel [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", idade=" + idade + "]";
 	}
 
 }

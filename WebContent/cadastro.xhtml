@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Página de Cadastro</title>
+	<meta></meta>
+</h:head>
+
+<h:body>
+
+	<h:form id="formPessoa">
+		<h1>Página Inicial</h1>
+		
+		<h:outputLabel value="Id:" />
+		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+		<br/>
+
+		<h:outputLabel value="Nome:" />
+		<h:inputText value="#{pessoaBean.pessoa.nome}" />
+		<br/>
+		
+		<h:outputLabel value="Sobrenome" />
+		<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
+		<br/>
+		
+		<h:outputLabel value="Idade:" />
+		<h:inputText value="#{pessoaBean.pessoa.idade}" />
+		<br/>
+		
+		<h:commandButton action="#{pessoaBean.salvar}" value="Salvar" />
+		<h:commandButton action="#{pessoaBean.novo}" value="Novo" />
+		<h:commandButton action="#{pessoaBean.remover}" value="Remover" />
+		
+	</h:form>
+	<br/><br/>
+	
+	<h:form id="formTable">
+	
+	<h:dataTable value="#{pessoaBean.pessoas}" var="p">
+	<h:column>
+	<h:outputText value="#{p.id}" />
+	</h:column>
+	
+	<h:column>
+	<h:outputText value="#{p.nome}" />
+	</h:column>
+	
+	<h:column>
+	<h:outputText value="#{p.sobrenome}" />
+	</h:column>
+	
+	<h:column>
+	<h:commandLink value="Editar">
+	<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
+	</h:commandLink>
+	</h:column>
+	
+	<h:column>
+	<h:commandLink value="Deletar" action="#{pessoaBean.remover}">
+	<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
+	</h:commandLink>
+	</h:column>
+	
+	
+	
+	
+	</h:dataTable>	
+	</h:form>
+	
+	
+</h:body>
+</html>

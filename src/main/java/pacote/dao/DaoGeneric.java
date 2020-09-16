@@ -5,71 +5,63 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import pacote.hibernate.HibernateUtil;
+import pacote.jpautil.JPAUtil;
 
 public class DaoGeneric<T> {
 
-	private EntityManager entityManager = HibernateUtil.getEntityManager();
 
 	public void salvar(T entidade) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
+		
 		entityManager.persist(entidade);
 		transaction.commit();
+		entityManager.close();
 	}
-
-	public T pesquisar1(T entidade) {
-		Object id = HibernateUtil.getPrimaryKey(entidade);
-
-		@SuppressWarnings("unchecked")
-		T ent = (T) entityManager.find(entidade.getClass(), id);
-
-		return ent;
-	}
-
-	public T pesquisar2(Long id, Class<T> entidade) {
-		T ent = entityManager.find(entidade, id);
-
-		return ent;
-	}
-
-	public T atualizar(T entidade) {
+	
+	public T merge(T entidade) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-
-		T userAtualizado = entityManager.merge(entidade);
+		
+		T ent = entityManager.merge(entidade);
 		transaction.commit();
-		return userAtualizado;
-	}
-
-	public void deletarPorId(T entidade) {
-		Object id = HibernateUtil.getPrimaryKey(entidade);
+		entityManager.close();
 		
+		return ent;
+	}
+	
+	public void deletarPorId(T entidade) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		entityManager.createNativeQuery("delete from " 
-				+ entidade.getClass().getSimpleName().toLowerCase()
+		Object id = JPAUtil.getPrimaryKey(entidade);
+		entityManager.createQuery("delete from "
+				+ entidade.getClass().getCanonicalName() 
 				+ " where id = " + id).executeUpdate();
 		
 		transaction.commit();
+		entityManager.close();
+		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<T> listar(Class<T> entidade){
+	public List<T> listarTodos(Class<T> entidade){
+		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		List<T> list = entityManager.createQuery("from " 
+		List<T> ent = entityManager.createQuery("from " 
 				+ entidade.getName()).getResultList();
 		
 		transaction.commit();
-		return list;		
+		entityManager.close();
+		return ent;
+		
 	}
 	
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
 
 }
 

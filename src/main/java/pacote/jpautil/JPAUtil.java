@@ -1,25 +1,16 @@
-package pacote.hibernate;
+package pacote.jpautil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class HibernateUtil {
+public class JPAUtil {
 
-	public static EntityManagerFactory factory = null;
+	private static EntityManagerFactory factory;
 	
 	static {
-		init();
-	}
-	
-	private static void init() {
-		try {
-			if(factory == null) {
-				factory = Persistence.createEntityManagerFactory("projeto-jsf-jpa");
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
+		if(factory == null) {
+			factory = Persistence.createEntityManagerFactory("projeto-jsf-jpa");
 		}
 	}
 	
@@ -30,5 +21,4 @@ public class HibernateUtil {
 	public static Object getPrimaryKey(Object entity) {
 		return factory.getPersistenceUnitUtil().getIdentifier(entity);
 	}
-	
 }
