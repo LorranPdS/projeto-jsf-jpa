@@ -17,20 +17,20 @@ public class PessoaBean {
 	private Pessoa pessoa = new Pessoa();
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
-	
+
 	public String salvar() {
 		pessoa = daoGeneric.salvar(pessoa);
 		carregarPessoas();
 		return "";
-	}	
-	
+	}
+
 	public String limpar() {
 		pessoa = new Pessoa();
 		return "";
 	}
-	
+
 	public String remover() {
-		daoGeneric.excluir(pessoa);
+		daoGeneric.deletarPorId(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
 		return "";
@@ -38,7 +38,7 @@ public class PessoaBean {
 	
 	@PostConstruct
 	public void carregarPessoas() {
-		pessoas = daoGeneric.listarTodos(Pessoa.class);
+		pessoas = daoGeneric.listarTodos(pessoa);
 	}
 
 	public Pessoa getPessoa() {

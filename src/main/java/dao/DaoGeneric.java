@@ -12,8 +12,8 @@ public class DaoGeneric<T> {
 	public T salvar(T entidade) {
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
-		
 		transaction.begin();
+		
 		T ent = entityManager.merge(entidade);
 		transaction.commit();
 		entityManager.close();
@@ -21,31 +21,31 @@ public class DaoGeneric<T> {
 		return ent;
 	}
 	
-	public void excluir(T entidade) {
+	public void deletarPorId(T entidade) {
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
 		Object id = JPAUtil.getPrimaryKey(entidade);
-		entityManager.createQuery("delete from " 
-		+ entidade.getClass().getCanonicalName() + " where id = " + id).executeUpdate();
+		entityManager.createQuery("delete from " + entidade.getClass().getCanonicalName()
+				+ " where id = " + id).executeUpdate();
 		
 		transaction.commit();
 		entityManager.close();		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<T> listarTodos(Class<T> entidade){
+	public List<T> listarTodos(T entidade){
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		List<T> result = entityManager.createQuery("from " 
-		+ entidade.getName()).getResultList();
+		List<T> list = entityManager.createQuery("from " 
+		+ entidade.getClass().getCanonicalName()).getResultList();
 		
 		transaction.commit();
 		entityManager.close();
-		
-		return result;
-	}	
+		return list;
+	}
+	
 }
