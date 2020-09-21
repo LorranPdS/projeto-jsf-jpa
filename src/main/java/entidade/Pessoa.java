@@ -26,11 +26,17 @@ public class Pessoa implements Serializable {
 	@Column(nullable = false)
 	private Integer idade;
 
-	private String sexo;
+	private Character sexo;
 
 	private String[] frameworks;
 
 	private Boolean ativo;
+
+	private String login;
+
+	private String senha;
+
+	private Character perfil;
 
 	public Long getId() {
 		return id;
@@ -64,11 +70,11 @@ public class Pessoa implements Serializable {
 		this.idade = idade;
 	}
 
-	public String getSexo() {
+	public Character getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(Character sexo) {
 		this.sexo = sexo;
 	}
 
@@ -86,6 +92,30 @@ public class Pessoa implements Serializable {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Character getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Character perfil) {
+		this.perfil = perfil;
 	}
 
 	@Override

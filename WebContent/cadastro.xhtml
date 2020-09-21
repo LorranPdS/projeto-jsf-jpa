@@ -11,14 +11,14 @@
 <h:body>
 
 	<h:form id="formulario">
-		<h1>Página Inicial</h1>
+		<h1>Página de Cadastro</h1>
 
-		<h:graphicImage library="img" name="primefaces.png" width="200"
+		<h:graphicImage library="img" name="primefaces.png" width="150"
 			height="100" />
 
 		<h:panelGrid columns="2">
 			<f:facet name="header">
-				<h:outputText value="Cadastro em JSF" />
+				<h:outputLabel value="Cadastro de usuário com JSF" />
 			</f:facet>
 
 			<h:outputLabel value="Id:" />
@@ -37,43 +37,65 @@
 			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
 				required="true">
 				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" />
-				<f:selectItem itemValue="MASCULINO" itemLabel="Masculino" />
-				<f:selectItem itemValue="FEMININO" itemLabel="Feminino" />
+				<f:selectItem itemValue="M" itemLabel="Masculino" />
+				<f:selectItem itemValue="F" itemLabel="Feminino" />
 			</h:selectOneMenu>
 
 			<h:outputLabel value="Frameworks:" />
 			<h:selectManyMenu id="campoFrameworks"
 				value="#{pessoaBean.pessoa.frameworks}" style="height: 90px;">
-
 				<f:selectItem itemValue="Hibernate" />
 				<f:selectItem itemValue="Spring MVC" />
 				<f:selectItem itemValue="JPA" />
 				<f:selectItem itemValue="PrimeFaces" />
 				<f:selectItem itemValue="JSF" />
-
 			</h:selectManyMenu>
-			
+
 			<h:outputLabel value="Ativo:" />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
+
+			<h:outputLabel value="Login" />
+			<h:inputText value="#{pessoaBean.pessoa.login}" />
+
+			<h:outputLabel value="Senha" />
+			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
+
+			<h:outputLabel value="Perfil do usuário" />
+			<h:selectOneMenu id="campoPerfil"
+				value="#{pessoaBean.pessoa.perfil}" required="true">
+				
+				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" />
+				<f:selectItem itemLabel="Administrador" itemValue="A" />
+				<f:selectItem itemLabel="Secretário" itemValue="S" />
+				<f:selectItem itemLabel="Recepcionista" itemValue="R" />
+			</h:selectOneMenu>
 
 			<h:outputLabel />
 
 			<h:panelGroup>
-				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" />
-				<h:commandButton value="Limpar" action="#{pessoaBean.limpar}" />
-				<h:commandButton value="Remover" action="#{pessoaBean.remover}" />
+				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"
+					image="/resources/img/salvar.png" title="Salvar" alt="Salvar"
+					style="width: 50px; height: 50px;" />
+
+				<h:commandButton value="Novo" action="#{pessoaBean.novo}"
+					image="/resources/img/limpar_do_bd.jpg" title="Novo Usuário"
+					alt="Novo Usuário" style="width: 50px; height: 50px;" />
+
+				<h:commandButton value="Limpar da tela" type="reset"
+					image="/resources/img/limpar.png" title="Limpar" alt="Limpar"
+					style="width: 50px; height: 50px;" />
+
 			</h:panelGroup>
 		</h:panelGrid>
 	</h:form>
 
 
 	<h:form id="tabela">
-		<h:dataTable value="#{pessoaBean.pessoas}" var="p" border="1"
-			cellpadding="8">
-
+		<h:dataTable value="#{pessoaBean.pessoas}" var="p" border="3"
+			cellpadding="10">
 			<f:facet name="header">
-	Lista de pessoas cadastradas
-	</f:facet>
+				<h:outputLabel value="Lista de pessoas cadastradas" />
+			</f:facet>
 
 			<h:column>
 				<f:facet name="header">Id</f:facet>
@@ -92,17 +114,22 @@
 
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink value="Editar">
+				<h:commandLink>
 					<f:setPropertyActionListener value="#{p}"
 						target="#{pessoaBean.pessoa}" />
+					<h:graphicImage library="img" name="editar.jpg" width="25"
+						height="25" title="Editar" alt="Editar" />
+
 				</h:commandLink>
 			</h:column>
 
-			<h:column>
-				<f:facet name="header">Deletar</f:facet>
-				<h:commandLink value="Deletar" action="#{pessoaBean.remover}">
+			<h:column rendered="#{pessoaBean.permissaoAcesso('A')}">
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink action="#{pessoaBean.remover}">
 					<f:setPropertyActionListener value="#{p}"
 						target="#{pessoaBean.pessoa}" />
+					<h:graphicImage library="img" name="excluir.jpg" width="25"
+						height="25" title="Excluir" alt="Excluir" />
 				</h:commandLink>
 			</h:column>
 

@@ -4,15 +4,25 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Página Index</title>
+	<title>Login</title>
 </h:head>
 
 <h:body>
 
-	<h:form>
-		<h1>Página Inicial</h1>
+	<h:form id="formLogin">
+		<h1>Realize o login</h1>
 		
-		<h:commandLink value="Página de Cadastro" action="cadastro"></h:commandLink>
+		<h:panelGrid columns="2">
+		<h:outputLabel value="Login" />
+		<h:inputText value="#{pessoaBean.pessoa.login}" />
+		
+		<h:outputLabel value="Senha" />
+		<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
+		
+		<h:commandButton value="Acessar" action="#{pessoaBean.logar}" />
+		
+		</h:panelGrid>
+
 	</h:form>
 </h:body>
 </html>
