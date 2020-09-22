@@ -10,6 +10,13 @@
 
 <h:body>
 
+<h:form>
+
+
+<h:commandLink value="Lançamentos" action="lancamento" style="margin-left: 1cm;" />
+<h:commandLink value="Trocar Usuário" action="index" style="margin-left: 1cm;" />
+</h:form>
+
 	<h:form id="formulario">
 		<h1>Página de Cadastro</h1>
 
@@ -61,9 +68,9 @@
 			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
 
 			<h:outputLabel value="Perfil do usuário" />
-			<h:selectOneMenu id="campoPerfil"
-				value="#{pessoaBean.pessoa.perfil}" required="true">
-				
+			<h:selectOneMenu id="campoPerfil" value="#{pessoaBean.pessoa.perfil}"
+				required="true">
+
 				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" />
 				<f:selectItem itemLabel="Administrador" itemValue="A" />
 				<f:selectItem itemLabel="Secretário" itemValue="S" />
