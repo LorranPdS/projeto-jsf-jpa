@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Página de Cadastro</title>
@@ -10,18 +12,14 @@
 
 <h:body>
 
-<h:form>
+	<h1>Página de Cadastro</h1>
 
-
-<h:commandLink value="Lançamentos" action="lancamento" style="margin-left: 1cm;" />
-<h:commandLink value="Trocar Usuário" action="index" style="margin-left: 1cm;" />
-</h:form>
+	<ui:include src="menu.xhtml" />
+	<p />
 
 	<h:form id="formulario">
-		<h1>Página de Cadastro</h1>
 
-		<h:graphicImage library="img" name="primefaces.png" width="150"
-			height="100" />
+		<h:messages infoStyle="color: green" />
 
 		<h:panelGrid columns="2">
 			<f:facet name="header">
@@ -32,13 +30,24 @@
 			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 
 			<h:outputLabel value="Nome:" />
-			<h:inputText value="#{pessoaBean.pessoa.nome}" />
+			<h:inputText value="#{pessoaBean.pessoa.nome}" a:autofocus="true"
+			required="true" requiredMessage="Informe o nome" 
+			validatorMessage="Nome com no mínimo 3 letras">
+			<f:validateLength minimum="3" maximum="20" />
+			</h:inputText>
 
 			<h:outputLabel value="Sobrenome:" />
 			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
 
 			<h:outputLabel value="Idade:" />
 			<h:inputText value="#{pessoaBean.pessoa.idade}" />
+
+			<h:outputLabel value="Data de nascimento:" />
+			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" 
+			converterMessage="Data de nascimento errada!">
+			<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+			timeZone="GMT-3:00" />
+			</h:inputText>
 
 			<h:outputLabel value="Sexo:" />
 			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
@@ -61,13 +70,13 @@
 			<h:outputLabel value="Ativo:" />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
 
-			<h:outputLabel value="Login" />
+			<h:outputLabel value="Login:" />
 			<h:inputText value="#{pessoaBean.pessoa.login}" />
 
-			<h:outputLabel value="Senha" />
+			<h:outputLabel value="Senha:" />
 			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
 
-			<h:outputLabel value="Perfil do usuário" />
+			<h:outputLabel value="Perfil do usuário:" />
 			<h:selectOneMenu id="campoPerfil" value="#{pessoaBean.pessoa.perfil}"
 				required="true">
 
@@ -77,6 +86,24 @@
 				<f:selectItem itemLabel="Recepcionista" itemValue="R" />
 			</h:selectOneMenu>
 
+			<h:outputLabel value="Nível do Programador:" />
+			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}"
+				layout="pageDirection">
+				<f:selectItem itemLabel="Júnior" itemValue="J" />
+				<f:selectItem itemLabel="Pleno" itemValue="P" />
+				<f:selectItem itemLabel="Sênior" itemValue="S" />
+				<f:selectItem itemLabel="Especialista" itemValue="E" />
+			</h:selectOneRadio>
+
+			<h:outputLabel value="Linguagens" />
+			<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagens}">
+				<f:selectItem itemLabel="Java" itemValue="1" />
+				<f:selectItem itemLabel="PHP" itemValue="2" />
+				<f:selectItem itemLabel="Pyton" itemValue="3" />
+				<f:selectItem itemLabel="C#" itemValue="4" />
+				<f:selectItem itemLabel="Cobol" itemValue="5" />
+			</h:selectManyCheckbox>
+
 			<h:outputLabel />
 
 			<h:panelGroup>
@@ -85,12 +112,8 @@
 					style="width: 50px; height: 50px;" />
 
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}"
-					image="/resources/img/limpar_do_bd.jpg" title="Novo Usuário"
-					alt="Novo Usuário" style="width: 50px; height: 50px;" />
-
-				<h:commandButton value="Limpar da tela" type="reset"
-					image="/resources/img/limpar.png" title="Limpar" alt="Limpar"
-					style="width: 50px; height: 50px;" />
+					image="/resources/img/novo.png" title="Novo Usuário"
+					alt="Novo Usuário" style="width: 50px; height: 50px; margin-left: 30px;" />
 
 			</h:panelGroup>
 		</h:panelGrid>

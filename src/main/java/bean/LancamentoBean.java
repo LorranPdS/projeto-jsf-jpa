@@ -28,35 +28,34 @@ public class LancamentoBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("loginUsuario");
-		
+
 		lancamento.setUsuario(pessoaUser);
 		lancamento = daoGeneric.salvar(lancamento);
-		
 		carregarLancamentos();
 		return "";
 	}
-	
+
 	@PostConstruct
 	public void carregarLancamentos() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("loginUsuario");
-		
+
 		lancamentos = daoLancamento.consultar(pessoaUser.getId());
 	}
-	
+
 	public String novo() {
 		lancamento = new Lancamento();
 		return "";
 	}
-	
+
 	public String remover() {
 		daoGeneric.deletarPorId(lancamento);
 		lancamento = new Lancamento();
 		carregarLancamentos();
 		return "";
 	}
-	
+
 	public Lancamento getLancamento() {
 		return lancamento;
 	}
@@ -79,6 +78,14 @@ public class LancamentoBean {
 
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
+	}
+
+	public IDaoLancamento getDaoLancamento() {
+		return daoLancamento;
+	}
+
+	public void setDaoLancamento(IDaoLancamento daoLancamento) {
+		this.daoLancamento = daoLancamento;
 	}
 
 }

@@ -13,21 +13,20 @@ public class IDaoLancamentoImpl implements IDaoLancamento {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lancamento> consultar(Long codUser) {
-
-		List<Lancamento> lista = null;
 		
+		List<Lancamento> lista = null;
+
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		lista = entityManager.createQuery("from Lancamento where usuario.id = "
+		lista = entityManager.createQuery("from Lancamento where usuario.id = " 
 				+ codUser).getResultList();
 		
 		transaction.commit();
 		entityManager.close();
-		return lista;
 	
+		return lista;
 	}
-
 
 }

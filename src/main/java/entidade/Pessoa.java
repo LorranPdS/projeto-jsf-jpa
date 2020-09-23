@@ -1,12 +1,15 @@
 package entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -26,6 +29,9 @@ public class Pessoa implements Serializable {
 	@Column(nullable = false)
 	private Integer idade;
 
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento = new Date();
+
 	private Character sexo;
 
 	private String[] frameworks;
@@ -37,6 +43,10 @@ public class Pessoa implements Serializable {
 	private String senha;
 
 	private Character perfil;
+
+	private Character nivelProgramador;
+
+	private Byte[] linguagens;
 
 	public Long getId() {
 		return id;
@@ -116,6 +126,30 @@ public class Pessoa implements Serializable {
 
 	public void setPerfil(Character perfil) {
 		this.perfil = perfil;
+	}
+
+	public Character getNivelProgramador() {
+		return nivelProgramador;
+	}
+
+	public void setNivelProgramador(Character nivelProgramador) {
+		this.nivelProgramador = nivelProgramador;
+	}
+
+	public Byte[] getLinguagens() {
+		return linguagens;
+	}
+
+	public void setLinguagens(Byte[] linguagens) {
+		this.linguagens = linguagens;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	@Override
