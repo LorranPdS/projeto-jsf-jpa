@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -30,7 +30,7 @@
 			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 
 			<h:outputLabel value="Nome:" />
-			<h:inputText value="#{pessoaBean.pessoa.nome}" a:autofocus="true"
+			<h:inputText value="#{pessoaBean.pessoa.nome}" pt:autofocus="true"
 			required="true" requiredMessage="Informe o nome" 
 			validatorMessage="Nome com no mínimo 3 letras">
 			<f:validateLength minimum="3" maximum="20" />
@@ -40,10 +40,12 @@
 			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
 
 			<h:outputLabel value="Idade:" />
-			<h:inputText value="#{pessoaBean.pessoa.idade}" />
+			<h:inputText value="#{pessoaBean.pessoa.idade}"
+			pt:placeholder="Insira apenas números" />
 
 			<h:outputLabel value="Data de nascimento:" />
-			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" 
+			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}"
+			pt:placeholder="dd/mm/aaaa" 
 			converterMessage="Data de nascimento errada!">
 			<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 			timeZone="GMT-3:00" />
@@ -66,6 +68,25 @@
 				<f:selectItem itemValue="PrimeFaces" />
 				<f:selectItem itemValue="JSF" />
 			</h:selectManyMenu>
+
+			<h:outputLabel value="CEP:" />
+			<h:inputText value="#{pessoaBean.pessoa.cep}"
+			pt:placeholder="Insira apenas números">
+			<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisarCep}"
+			render="logradouro bairro localidade uf" />
+			</h:inputText>
+			
+			<h:outputLabel value="Logradouro:" />
+			<h:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro" />
+			
+			<h:outputLabel value="Bairro:" />
+			<h:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro" />
+			
+			<h:outputLabel value="Localidade:" />
+			<h:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade" />
+			
+			<h:outputLabel value="UF:" />
+			<h:inputText value="#{pessoaBean.pessoa.uf}" id="uf" />
 
 			<h:outputLabel value="Ativo:" />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
@@ -112,8 +133,9 @@
 					style="width: 50px; height: 50px;" />
 
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}"
-					image="/resources/img/novo.png" title="Novo Usuário"
-					alt="Novo Usuário" style="width: 50px; height: 50px; margin-left: 30px;" />
+					image="/resources/img/novo.png" title="Limpar formulário"
+					alt="Limpar formulário" 
+					style="width: 50px; height: 50px; margin-left: 30px;" />
 
 			</h:panelGroup>
 		</h:panelGrid>

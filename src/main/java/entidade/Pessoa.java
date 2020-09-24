@@ -3,7 +3,6 @@ package entidade;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,17 +19,14 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = false)
 	private String sobrenome;
 
-	@Column(nullable = false)
 	private Integer idade;
 
 	@Temporal(TemporalType.DATE)
-	private Date dataNascimento = new Date();
+	private Date dataNascimento;
 
 	private Character sexo;
 
@@ -47,6 +43,16 @@ public class Pessoa implements Serializable {
 	private Character nivelProgramador;
 
 	private Byte[] linguagens;
+
+	private String cep;
+
+	private String logradouro;
+
+	private String bairro;
+
+	private String localidade;
+
+	private String uf;
 
 	public Long getId() {
 		return id;
@@ -150,6 +156,46 @@ public class Pessoa implements Serializable {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	@Override
