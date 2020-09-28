@@ -8,6 +8,8 @@
 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
 	<class>entidade.Pessoa</class>
 	<class>entidade.Lancamento</class>
+	<class>entidade.Estados</class>
+	<class>entidade.Cidades</class>
 	
 	<properties>
 	<property name="javax.persistence.jdbc.url" 

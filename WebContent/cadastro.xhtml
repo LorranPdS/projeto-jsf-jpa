@@ -31,9 +31,9 @@
 
 			<h:outputLabel value="Nome:" />
 			<h:inputText value="#{pessoaBean.pessoa.nome}" pt:autofocus="true"
-			required="true" requiredMessage="Informe o nome" 
-			validatorMessage="Nome com no mínimo 3 letras">
-			<f:validateLength minimum="3" maximum="20" />
+				required="true" requiredMessage="Informe o nome"
+				validatorMessage="Nome com no mínimo 3 letras">
+				<f:validateLength minimum="3" maximum="20" />
 			</h:inputText>
 
 			<h:outputLabel value="Sobrenome:" />
@@ -41,14 +41,14 @@
 
 			<h:outputLabel value="Idade:" />
 			<h:inputText value="#{pessoaBean.pessoa.idade}"
-			pt:placeholder="Insira apenas números" />
+				pt:placeholder="Insira apenas números" />
 
 			<h:outputLabel value="Data de nascimento:" />
 			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}"
-			pt:placeholder="dd/mm/aaaa" 
-			converterMessage="Data de nascimento errada!">
-			<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-			timeZone="GMT-3:00" />
+				pt:placeholder="dd/mm/aaaa"
+				converterMessage="Data de nascimento errada!">
+				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+					timeZone="GMT-3:00" />
 			</h:inputText>
 
 			<h:outputLabel value="Sexo:" />
@@ -71,20 +71,21 @@
 
 			<h:outputLabel value="CEP:" />
 			<h:inputText value="#{pessoaBean.pessoa.cep}"
-			pt:placeholder="Insira apenas números">
-			<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisarCep}"
-			render="logradouro bairro localidade uf" />
+				pt:placeholder="Insira apenas números">
+				<f:ajax event="blur" execute="@this"
+					listener="#{pessoaBean.pesquisarCep}"
+					render="logradouro bairro localidade uf" />
 			</h:inputText>
-			
+
 			<h:outputLabel value="Logradouro:" />
 			<h:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro" />
-			
+
 			<h:outputLabel value="Bairro:" />
 			<h:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro" />
-			
+
 			<h:outputLabel value="Localidade:" />
 			<h:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade" />
-			
+
 			<h:outputLabel value="UF:" />
 			<h:inputText value="#{pessoaBean.pessoa.uf}" id="uf" />
 
@@ -116,7 +117,7 @@
 				<f:selectItem itemLabel="Especialista" itemValue="E" />
 			</h:selectOneRadio>
 
-			<h:outputLabel value="Linguagens" />
+			<h:outputLabel value="Linguagens:" />
 			<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagens}">
 				<f:selectItem itemLabel="Java" itemValue="1" />
 				<f:selectItem itemLabel="PHP" itemValue="2" />
@@ -124,6 +125,23 @@
 				<f:selectItem itemLabel="C#" itemValue="4" />
 				<f:selectItem itemLabel="Cobol" itemValue="5" />
 			</h:selectManyCheckbox>
+
+			<h:outputLabel value="Estados:" />
+			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}"
+			id="comboEstados" converter="estadoConverter" immediate="true">
+			<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" itemDisabled="true" />
+				<f:selectItems value="#{pessoaBean.estados}" />
+				
+				<f:ajax event="change" execute="@this" render="comboCidades"
+				listener="#{pessoaBean.carregarCidades}" />
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Cidades:" />
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" immediate="true"
+			id="comboCidades" converter="cidadeConverter">
+			<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" itemDisabled="true" />
+			<f:selectItems value="#{pessoaBean.cidades}" />
+			</h:selectOneMenu>
 
 			<h:outputLabel />
 
@@ -134,7 +152,7 @@
 
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}"
 					image="/resources/img/novo.png" title="Limpar formulário"
-					alt="Limpar formulário" 
+					alt="Limpar formulário"
 					style="width: 50px; height: 50px; margin-left: 30px;" />
 
 			</h:panelGroup>
@@ -166,7 +184,8 @@
 
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink>
+				<h:commandLink title="Editar" immediate="true"
+				action="#{pessoaBean.editar}">
 					<f:setPropertyActionListener value="#{p}"
 						target="#{pessoaBean.pessoa}" />
 					<h:graphicImage library="img" name="editar.jpg" width="25"
