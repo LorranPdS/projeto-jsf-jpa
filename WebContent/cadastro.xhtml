@@ -17,7 +17,7 @@
 	<ui:include src="menu.xhtml" />
 	<p />
 
-	<h:form id="formulario">
+	<h:form id="formulario" enctype="multipart/form-data">
 
 		<h:messages infoStyle="color: green" />
 
@@ -28,6 +28,9 @@
 
 			<h:outputLabel value="Id:" />
 			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+
+			<h:outputLabel value="Foto:" />
+			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}" />
 
 			<h:outputLabel value="Nome:" />
 			<h:inputText value="#{pessoaBean.pessoa.nome}" pt:autofocus="true"
@@ -128,19 +131,21 @@
 
 			<h:outputLabel value="Estados:" />
 			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}"
-			id="comboEstados" converter="estadoConverter" immediate="true">
-			<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" itemDisabled="true" />
+				id="comboEstados" converter="estadoConverter" immediate="true">
+				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]"
+					itemDisabled="true" />
 				<f:selectItems value="#{pessoaBean.estados}" />
-				
+
 				<f:ajax event="change" execute="@this" render="comboCidades"
-				listener="#{pessoaBean.carregarCidades}" />
+					listener="#{pessoaBean.carregarCidades}" />
 			</h:selectOneMenu>
-			
+
 			<h:outputLabel value="Cidades:" />
-			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" immediate="true"
-			id="comboCidades" converter="cidadeConverter">
-			<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" itemDisabled="true" />
-			<f:selectItems value="#{pessoaBean.cidades}" />
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}"
+				immediate="true" id="comboCidades" converter="cidadeConverter">
+				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]"
+					itemDisabled="true" />
+				<f:selectItems value="#{pessoaBean.cidades}" />
 			</h:selectOneMenu>
 
 			<h:outputLabel />
@@ -178,6 +183,14 @@
 			</h:column>
 
 			<h:column>
+				<f:facet name="header">Foto</f:facet>
+				<h:commandLink actionListener="#{pessoaBean.download}">
+					<h:graphicImage width="60" height="60" value="#{p.fotoIconBase64}" />
+					<f:param name="fileDownloadId" value="#{p.id}" />
+				</h:commandLink>
+			</h:column>
+
+			<h:column>
 				<f:facet name="header">Sobrenome</f:facet>
 				<h:outputText value="#{p.sobrenome}" />
 			</h:column>
@@ -185,7 +198,7 @@
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
 				<h:commandLink title="Editar" immediate="true"
-				action="#{pessoaBean.editar}">
+					action="#{pessoaBean.editar}">
 					<f:setPropertyActionListener value="#{p}"
 						target="#{pessoaBean.pessoa}" />
 					<h:graphicImage library="img" name="editar.jpg" width="25"
