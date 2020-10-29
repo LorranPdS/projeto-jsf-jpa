@@ -1,32 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Página de Lançamentos</title>
+	<title>Lan�amentos</title>
 </h:head>
-
 <h:body>
 
-	<h1>Página de Lançamentos</h1>
+	<h1>P�gina de Lan�amentos</h1>
 
 	<ui:include src="menu.xhtml" />
-	<p />
 
 	<h:form id="formLancamento">
+
 		<h:panelGrid columns="2">
-			<f:facet name="header">
-				<h:outputLabel value="Lançamento" />
-			</f:facet>
+			<f:facet name="header">Lan�amentos</f:facet>
 
 			<h:outputLabel value="Id:" />
 			<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
 
 			<h:outputLabel value="Nota:" />
-			<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" />
+			<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}"
+				pt:autofocus="true" />
 
 			<h:outputLabel value="Origem:" />
 			<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" />
@@ -37,78 +36,71 @@
 			<h:outputLabel />
 
 			<h:panelGroup>
-				<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}"
-					image="resources/img/salvar.png" style="width: 30px; height: 30px;"
-					title="Salvar" alt="Salvar" />
+				<h:commandButton action="#{lancamentoBean.salvar}"
+					image="/resources/img/salvar.png" title="Salvar" alt="Salvar"
+					style="width: 50px; height: 50px;" />
 
-				<h:commandButton value="Novo" action="#{lancamentoBean.novo}"
-					image="resources/img/apagar_do_bd.png"
-					style="width: 30px; height: 30px;
-			margin-left: 1.5cm;"
-			title="Limpar formulário" alt="Limpar formulário" />
+				<h:commandButton action="#{lancamentoBean.novo}"
+					image="/resources/img/nova_nota.png" title="Nova Nota"
+					alt="Nova Nota" style="width: 70px; height: 50px;" />
 			</h:panelGroup>
 		</h:panelGrid>
 
 	</h:form>
 
-	<h:form id="formLista">
-		<h:dataTable value="#{lancamentoBean.lancamentos}" var="l" border="1">
+	<h:form id="tabelaLancamento">
 
-			<f:facet name="header">
-				<h:outputLabel value="Lista de Lançamentos" />
-			</f:facet>
+		<h:dataTable border="1" cellpadding="8"
+			value="#{lancamentoBean.lancamentos}" var="lanc">
+
+			<f:facet name="header">Lista de Lan�amentos</f:facet>
 
 			<h:column>
 				<f:facet name="header">Id</f:facet>
-				<h:outputText value="#{l.id}" />
+				<h:outputText value="#{lanc.id}" />
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Nota</f:facet>
-				<h:outputText value="#{l.numeroNotaFiscal}" />
+				<h:outputText value="#{lanc.numeroNotaFiscal}" />
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Origem</f:facet>
-				<h:outputText value="#{l.empresaOrigem}" />
+				<h:outputText value="#{lanc.empresaOrigem}" />
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Destino</f:facet>
-				<h:outputText value="#{l.empresaDestino}" />
+				<h:outputText value="#{lanc.empresaDestino}" />
 			</h:column>
 
 			<h:column>
-				<f:facet name="header">Usuário</f:facet>
-				<h:outputText value="#{l.usuario.nome}" />
+				<f:facet name="header">Usu�rio</f:facet>
+				<h:outputText value="#{lanc.usuario.nome}" />
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink title="Editar">
-					<f:setPropertyActionListener value="#{l}"
+				<h:commandLink>
+					<f:setPropertyActionListener value="#{lanc}"
 						target="#{lancamentoBean.lancamento}" />
-
 					<h:graphicImage library="img" name="editar.jpg" width="30"
-						height="30" alt="Editar" title="Editar" />
+						height="30" />
 				</h:commandLink>
 			</h:column>
 
 			<h:column rendered="#{pessoaBean.permissaoAcesso('A')}">
 				<f:facet name="header">Excluir</f:facet>
-				<h:commandLink title="Excluir" action="#{lancamentoBean.remover}">
-					<f:setPropertyActionListener value="#{l}"
+				<h:commandLink action="#{lancamentoBean.remover}">
+					<f:setPropertyActionListener value="#{lanc}"
 						target="#{lancamentoBean.lancamento}" />
-
 					<h:graphicImage library="img" name="excluir.jpg" width="30"
-						height="30" alt="Excluir" title="Excluir" />
+						height="30" />
 				</h:commandLink>
 			</h:column>
-
-
 		</h:dataTable>
 
 	</h:form>
-
 </h:body>
 </html>

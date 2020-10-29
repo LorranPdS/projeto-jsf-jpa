@@ -11,10 +11,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.constraints.br.TituloEleitoral;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -25,46 +31,40 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@NotEmpty(message = "Insira um nome")
+	@Size(min = 3, max = 20, message = "Nome deve conter entre 3 e 20 letras")
 	private String nome;
 
+	@NotEmpty(message = "Sobrenome deve ser informado")
+	@NotNull(message = "Sobrenome deve ser informado")
 	private String sobrenome;
 
+	@DecimalMin(value = "10", message = "Idade deve ser maior que 10")
+	@DecimalMax(value = "100", message = "Idade deve ser menor que 100")
 	private Integer idade;
 
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
 	private Character sexo;
-
 	private String[] frameworks;
 
-	private Boolean ativo;
-
-	private String login;
-
-	private String senha;
-
-	private Character perfil;
-
-	private Character nivelProgramador;
-
-	private Byte[] linguagens;
-
 	private String cep;
-
 	private String logradouro;
-
 	private String bairro;
-
 	private String localidade;
-
 	private String uf;
 
-	@Transient
-	private Estados estados;
+	private Boolean ativo;
+	private String login;
+	private String senha;
+	private Character perfil;
 
-	@ManyToOne
-	private Cidades cidades;
+	@CPF(message = "CPF inválido")
+	private String cpf;
+
+	@TituloEleitoral(message = "Título Eleitoral inválido")
+	private String tituloEleitoral;
 
 	@Column(columnDefinition = "text")
 	private String fotoIconBase64;
@@ -73,7 +73,7 @@ public class Pessoa implements Serializable {
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Column(nullable=true)
+	@Column(nullable = true)
 	private byte[] fotoIconBase64Original;
 
 	public Long getId() {
@@ -106,6 +106,14 @@ public class Pessoa implements Serializable {
 
 	public void setIdade(Integer idade) {
 		this.idade = idade;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	public Character getSexo() {
@@ -156,28 +164,20 @@ public class Pessoa implements Serializable {
 		this.perfil = perfil;
 	}
 
-	public Character getNivelProgramador() {
-		return nivelProgramador;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setNivelProgramador(Character nivelProgramador) {
-		this.nivelProgramador = nivelProgramador;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
-	public Byte[] getLinguagens() {
-		return linguagens;
+	public String getTituloEleitoral() {
+		return tituloEleitoral;
 	}
 
-	public void setLinguagens(Byte[] linguagens) {
-		this.linguagens = linguagens;
-	}
-
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setTituloEleitoral(String tituloEleitoral) {
+		this.tituloEleitoral = tituloEleitoral;
 	}
 
 	public String getCep() {
@@ -218,22 +218,6 @@ public class Pessoa implements Serializable {
 
 	public void setUf(String uf) {
 		this.uf = uf;
-	}
-
-	public Estados getEstados() {
-		return estados;
-	}
-
-	public void setEstados(Estados estados) {
-		this.estados = estados;
-	}
-
-	public Cidades getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(Cidades cidades) {
-		this.cidades = cidades;
 	}
 
 	public String getFotoIconBase64() {

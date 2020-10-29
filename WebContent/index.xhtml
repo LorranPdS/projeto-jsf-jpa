@@ -1,25 +1,29 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Login</title>
+	<title>Index</title>
 </h:head>
-
 <h:body>
-	<h1>Realize o login</h1>
-	<h:form>
+
+	<h1>Realize o Login</h1>
+	<h:form id="formLogin">
+
 		<h:panelGrid columns="2">
+
 			<h:outputLabel value="Login:" />
-			<h:inputText value="#{pessoaBean.pessoa.login}" a:autofocus="true" />
-			
+			<h:inputText value="#{pessoaBean.pessoa.login}" />
+
 			<h:outputLabel value="Senha:" />
 			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
-			
-			<h:commandButton value="Acessar" action="#{pessoaBean.logar}" />
+
+			<h:outputLabel />
+			<h:commandButton value="Salvar" action="#{pessoaBean.logar}" />
 		</h:panelGrid>
+
 
 	</h:form>
 

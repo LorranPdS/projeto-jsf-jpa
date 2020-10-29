@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import entidade.Pessoa;
 import jpautil.JPAUtil;
 
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = { "/*" })
 public class FilterAutenticacao implements Filter {
 
 	@Override
@@ -26,21 +26,18 @@ public class FilterAutenticacao implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
-		
+
 		Pessoa loginUsuario = (Pessoa) session.getAttribute("loginUsuario");
 		String url = req.getServletPath();
-		
-		if(!url.equalsIgnoreCase("/index.jsf") && loginUsuario == null) {
+
+		if (!url.equalsIgnoreCase("/index.jsf") && loginUsuario == null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsf");
 			dispatcher.forward(request, response);
 			return;
-		} else {
-			chain.doFilter(request, response);
 		}
-		
+		chain.doFilter(request, response);
 	}
 
 	@Override

@@ -19,10 +19,10 @@ import repository.IDaoLancamentoImpl;
 @ManagedBean(name = "lancamentoBean")
 public class LancamentoBean {
 
-	private Lancamento lancamento = new Lancamento();
 	private DaoGeneric<Lancamento> daoGeneric = new DaoGeneric<Lancamento>();
+	private Lancamento lancamento = new Lancamento();
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
-	private IDaoLancamento daoLancamento = new IDaoLancamentoImpl();
+	private IDaoLancamento iDaoLancamento = new IDaoLancamentoImpl();
 
 	public String salvar() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -30,38 +30,32 @@ public class LancamentoBean {
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("loginUsuario");
 
 		lancamento.setUsuario(pessoaUser);
-		lancamento = daoGeneric.salvar(lancamento);
+		daoGeneric.salvar(lancamento);
 		carregarLancamentos();
+		lancamento = new Lancamento();
 		return "";
 	}
-
+	
+	public String novo() {
+		lancamento = new Lancamento();
+		return "";
+	}
+	
 	@PostConstruct
 	public void carregarLancamentos() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("loginUsuario");
-
-		lancamentos = daoLancamento.consultar(pessoaUser.getId());
+		
+		lancamentos = iDaoLancamento.consultar(pessoaUser.getId());
 	}
-
-	public String novo() {
-		lancamento = new Lancamento();
-		return "";
-	}
-
-	public String remover() {
+	
+	public String remover() {		
 		daoGeneric.deletarPorId(lancamento);
 		lancamento = new Lancamento();
 		carregarLancamentos();
 		return "";
-	}
-
-	public Lancamento getLancamento() {
-		return lancamento;
-	}
-
-	public void setLancamento(Lancamento lancamento) {
-		this.lancamento = lancamento;
+		
 	}
 
 	public DaoGeneric<Lancamento> getDaoGeneric() {
@@ -72,20 +66,20 @@ public class LancamentoBean {
 		this.daoGeneric = daoGeneric;
 	}
 
+	public Lancamento getLancamento() {
+		return lancamento;
+	}
+
+	public void setLancamento(Lancamento lancamento) {
+		this.lancamento = lancamento;
+	}
+
 	public List<Lancamento> getLancamentos() {
 		return lancamentos;
 	}
 
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
-	}
-
-	public IDaoLancamento getDaoLancamento() {
-		return daoLancamento;
-	}
-
-	public void setDaoLancamento(IDaoLancamento daoLancamento) {
-		this.daoLancamento = daoLancamento;
 	}
 
 }

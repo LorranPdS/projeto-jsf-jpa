@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -7,49 +7,40 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>PÃ¡gina de Cadastro</title>
+	<title>Cadastro</title>
 </h:head>
-
 <h:body>
 
-	<h1>PÃ¡gina de Cadastro</h1>
+	<h1>Página de Cadastro</h1>
 
 	<ui:include src="menu.xhtml" />
-	<p />
 
 	<h:form id="formulario" enctype="multipart/form-data">
 
-		<h:messages infoStyle="color: green" />
+		<h:messages infoStyle="color:green;" />
 
 		<h:panelGrid columns="2">
-			<f:facet name="header">
-				<h:outputLabel value="Cadastro de usuÃ¡rio com JSF" />
-			</f:facet>
+			<f:facet name="header">Cadastro de Usuário com JSF</f:facet>
 
 			<h:outputLabel value="Id:" />
 			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 
-			<h:outputLabel value="Foto:" />
-			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}" />
-
 			<h:outputLabel value="Nome:" />
-			<h:inputText value="#{pessoaBean.pessoa.nome}" pt:autofocus="true"
-				required="true" requiredMessage="Informe o nome"
-				validatorMessage="Nome com no mÃ­nimo 3 letras">
-				<f:validateLength minimum="3" maximum="20" />
-			</h:inputText>
+			<h:inputText value="#{pessoaBean.pessoa.nome}" pt:autofocus="true" />
+
+			<h:outputLabel value="Foto" />
+			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}" />
 
 			<h:outputLabel value="Sobrenome:" />
 			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
 
 			<h:outputLabel value="Idade:" />
 			<h:inputText value="#{pessoaBean.pessoa.idade}"
-				pt:placeholder="Insira apenas nÃºmeros" />
+				pt:placeholder="Insira apenas números" />
 
-			<h:outputLabel value="Data de nascimento:" />
+			<h:outputLabel value="Data de Nascimento:" />
 			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}"
-				pt:placeholder="dd/mm/aaaa"
-				converterMessage="Data de nascimento errada!">
+				pt:placeholder="dd/mm/aaaa">
 				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 					timeZone="GMT-3:00" />
 			</h:inputText>
@@ -57,9 +48,10 @@
 			<h:outputLabel value="Sexo:" />
 			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
 				required="true">
-				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" />
-				<f:selectItem itemValue="M" itemLabel="Masculino" />
-				<f:selectItem itemValue="F" itemLabel="Feminino" />
+				<f:selectItem itemLabel="[-Selecione-]" noSelectionOption="true"
+					itemDisabled="true" />
+				<f:selectItem itemLabel="Masculino" itemValue="M" />
+				<f:selectItem itemLabel="Feminino" itemValue="F" />
 			</h:selectOneMenu>
 
 			<h:outputLabel value="Frameworks:" />
@@ -74,25 +66,26 @@
 
 			<h:outputLabel value="CEP:" />
 			<h:inputText value="#{pessoaBean.pessoa.cep}"
-				pt:placeholder="Insira apenas nÃºmeros">
+				pt:placeholder="Insira apenas números">
 				<f:ajax event="blur" execute="@this"
 					listener="#{pessoaBean.pesquisarCep}"
 					render="logradouro bairro localidade uf" />
+
 			</h:inputText>
 
 			<h:outputLabel value="Logradouro:" />
-			<h:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro" />
+			<h:inputText id="logradouro" value="#{pessoaBean.pessoa.logradouro}" />
 
 			<h:outputLabel value="Bairro:" />
-			<h:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro" />
+			<h:inputText id="bairro" value="#{pessoaBean.pessoa.bairro}" />
 
 			<h:outputLabel value="Localidade:" />
-			<h:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade" />
+			<h:inputText id="localidade" value="#{pessoaBean.pessoa.localidade}" />
 
 			<h:outputLabel value="UF:" />
-			<h:inputText value="#{pessoaBean.pessoa.uf}" id="uf" />
+			<h:inputText id="uf" value="#{pessoaBean.pessoa.uf}" />
 
-			<h:outputLabel value="Ativo:" />
+			<h:outputLabel value="Ativo" />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
 
 			<h:outputLabel value="Login:" />
@@ -101,76 +94,43 @@
 			<h:outputLabel value="Senha:" />
 			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
 
-			<h:outputLabel value="Perfil do usuÃ¡rio:" />
+			<h:outputLabel value="Perfil:" />
 			<h:selectOneMenu id="campoPerfil" value="#{pessoaBean.pessoa.perfil}"
 				required="true">
-
-				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]" />
+				<f:selectItem itemLabel="[-Selecione-]" noSelectionOption="true"
+					itemDisabled="true" />
 				<f:selectItem itemLabel="Administrador" itemValue="A" />
-				<f:selectItem itemLabel="SecretÃ¡rio" itemValue="S" />
+				<f:selectItem itemLabel="Secretário" itemValue="S" />
 				<f:selectItem itemLabel="Recepcionista" itemValue="R" />
 			</h:selectOneMenu>
-
-			<h:outputLabel value="NÃ­vel do Programador:" />
-			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}"
-				layout="pageDirection">
-				<f:selectItem itemLabel="JÃºnior" itemValue="J" />
-				<f:selectItem itemLabel="Pleno" itemValue="P" />
-				<f:selectItem itemLabel="SÃªnior" itemValue="S" />
-				<f:selectItem itemLabel="Especialista" itemValue="E" />
-			</h:selectOneRadio>
-
-			<h:outputLabel value="Linguagens:" />
-			<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagens}">
-				<f:selectItem itemLabel="Java" itemValue="1" />
-				<f:selectItem itemLabel="PHP" itemValue="2" />
-				<f:selectItem itemLabel="Pyton" itemValue="3" />
-				<f:selectItem itemLabel="C#" itemValue="4" />
-				<f:selectItem itemLabel="Cobol" itemValue="5" />
-			</h:selectManyCheckbox>
-
-			<h:outputLabel value="Estados:" />
-			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}"
-				id="comboEstados" converter="estadoConverter" immediate="true">
-				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]"
-					itemDisabled="true" />
-				<f:selectItems value="#{pessoaBean.estados}" />
-
-				<f:ajax event="change" execute="@this" render="comboCidades"
-					listener="#{pessoaBean.carregarCidades}" />
-			</h:selectOneMenu>
-
-			<h:outputLabel value="Cidades:" />
-			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}"
-				immediate="true" id="comboCidades" converter="cidadeConverter">
-				<f:selectItem noSelectionOption="true" itemLabel="[-Selecione-]"
-					itemDisabled="true" />
-				<f:selectItems value="#{pessoaBean.cidades}" />
-			</h:selectOneMenu>
+			
+			<h:outputLabel value="CPF:" />
+			<h:inputText value="#{pessoaBean.pessoa.cpf}" />
+			
+			<h:outputLabel value="Título Eleitoral:" />
+			<h:inputText value="#{pessoaBean.pessoa.tituloEleitoral}" />
 
 			<h:outputLabel />
-
 			<h:panelGroup>
-				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"
+				<h:commandButton action="#{pessoaBean.salvar}"
 					image="/resources/img/salvar.png" title="Salvar" alt="Salvar"
 					style="width: 50px; height: 50px;" />
-
+					
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}"
-					image="/resources/img/novo.png" title="Limpar formulÃ¡rio"
-					alt="Limpar formulÃ¡rio"
-					style="width: 50px; height: 50px; margin-left: 30px;" />
-
+					image="/resources/img/novo.png" title="Novo Usuário" alt="Novo"
+					style="width: 50px; height: 50px;" immediate="true" />
 			</h:panelGroup>
 		</h:panelGrid>
 	</h:form>
+	<br />
+	<br />
 
+	<h:form id="formTabela">
 
-	<h:form id="tabela">
-		<h:dataTable value="#{pessoaBean.pessoas}" var="p" border="3"
+		<h:dataTable value="#{pessoaBean.pessoas}" var="p" border="1"
 			cellpadding="10">
-			<f:facet name="header">
-				<h:outputLabel value="Lista de pessoas cadastradas" />
-			</f:facet>
+
+			<f:facet name="header">Lista de Pessoas Cadastradas</f:facet>
 
 			<h:column>
 				<f:facet name="header">Id</f:facet>
@@ -185,7 +145,7 @@
 			<h:column>
 				<f:facet name="header">Foto</f:facet>
 				<h:commandLink actionListener="#{pessoaBean.download}">
-					<h:graphicImage width="60" height="60" value="#{p.fotoIconBase64}" />
+					<h:graphicImage value="#{p.fotoIconBase64}" width="60" height="60" />
 					<f:param name="fileDownloadId" value="#{p.id}" />
 				</h:commandLink>
 			</h:column>
@@ -196,29 +156,34 @@
 			</h:column>
 
 			<h:column>
+				<f:facet name="header">Idade</f:facet>
+				<h:outputText value="#{p.idade}" />
+			</h:column>
+
+			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink title="Editar" immediate="true"
-					action="#{pessoaBean.editar}">
+				<h:commandLink>
 					<f:setPropertyActionListener value="#{p}"
 						target="#{pessoaBean.pessoa}" />
-					<h:graphicImage library="img" name="editar.jpg" width="25"
-						height="25" title="Editar" alt="Editar" />
-
+					<h:graphicImage library="img" name="editar.jpg" width="30"
+						height="30" />
 				</h:commandLink>
 			</h:column>
 
 			<h:column rendered="#{pessoaBean.permissaoAcesso('A')}">
 				<f:facet name="header">Excluir</f:facet>
-				<h:commandLink action="#{pessoaBean.remover}">
+				<h:commandLink action="#{pessoaBean.remover}" immediate="true">
 					<f:setPropertyActionListener value="#{p}"
 						target="#{pessoaBean.pessoa}" />
-					<h:graphicImage library="img" name="excluir.jpg" width="25"
-						height="25" title="Excluir" alt="Excluir" />
+					<h:graphicImage library="img" name="excluir.jpg" width="30"
+						height="30" />
 				</h:commandLink>
 			</h:column>
 
 		</h:dataTable>
+
 	</h:form>
+
 
 </h:body>
 </html>
