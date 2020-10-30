@@ -1,19 +1,26 @@
 package repository;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import entidade.Lancamento;
-import jpautil.JPAUtil;
 
-public class IDaoLancamentoImpl implements IDaoLancamento {
+@Named
+public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private EntityManager entityManager;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lancamento> consultar(Long codUser) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
@@ -21,7 +28,6 @@ public class IDaoLancamentoImpl implements IDaoLancamento {
 				"from Lancamento where usuario.id = " + codUser).getResultList();
 		
 		transaction.commit();
-		entityManager.close();
 		return lista;
 	}
 

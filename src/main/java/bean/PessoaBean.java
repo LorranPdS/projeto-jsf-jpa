@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -16,12 +17,13 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -32,16 +34,22 @@ import com.google.gson.Gson;
 import dao.DaoGeneric;
 import entidade.Pessoa;
 import repository.IDaoPessoa;
-import repository.IDaoPessoaImpl;
 
 @ViewScoped
-@ManagedBean(name = "pessoaBean")
-public class PessoaBean {
+@Named(value = "pessoaBean")
+public class PessoaBean implements Serializable {
 
-	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
+	private static final long serialVersionUID = 1L;
+	
 	private Pessoa pessoa = new Pessoa();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
-	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
+
+	@Inject
+	private DaoGeneric<Pessoa> daoGeneric;
+
+	@Inject
+	private IDaoPessoa iDaoPessoa;
+
 	private Part arquivoFoto;
 
 	public String salvar() throws IOException {
@@ -197,8 +205,7 @@ public class PessoaBean {
 	}
 
 	public void download() throws IOException {
-		Map<String, String> params = FacesContext.getCurrentInstance()
-				.getExternalContext().getRequestParameterMap();
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 
 		String fileDownloadId = params.get("fileDownloadId");
 		Pessoa pessoa = daoGeneric.consultar(Pessoa.class, fileDownloadId);
@@ -216,14 +223,6 @@ public class PessoaBean {
 		FacesContext.getCurrentInstance().responseComplete(); // Diz que é a resposta completa
 
 	}
-	
-	public DaoGeneric<Pessoa> getDaoGeneric() {
-		return daoGeneric;
-	}
-
-	public void setDaoGeneric(DaoGeneric<Pessoa> daoGeneric) {
-		this.daoGeneric = daoGeneric;
-	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -239,6 +238,14 @@ public class PessoaBean {
 
 	public void setPessoas(List<Pessoa> pessoas) {
 		this.pessoas = pessoas;
+	}
+
+	public DaoGeneric<Pessoa> getDaoGeneric() {
+		return daoGeneric;
+	}
+
+	public void setDaoGeneric(DaoGeneric<Pessoa> daoGeneric) {
+		this.daoGeneric = daoGeneric;
 	}
 
 	public IDaoPessoa getiDaoPessoa() {
